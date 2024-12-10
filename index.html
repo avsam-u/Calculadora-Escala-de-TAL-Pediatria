@@ -77,11 +77,6 @@
             color: white;
         }
     </style>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-
-        mermaid.initialize({ startOnLoad: true });
-    </script>
 </head>
 <body>
 
@@ -144,93 +139,63 @@
                 </tr>
                 <tr>
                     <td>6 - 8 puntos</td>
-                    <td>2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 1 hora.</td>
+                    <td>2 puff de salbutamol c/10' x5 veces. Reevaluar en 1 hora. Si el puntaje no mejora, añadir corticoides orales o parentales.</td>
                 </tr>
                 <tr>
                     <td>9 - 12 puntos</td>
-                    <td>Oxigenoterapia + 2 puff de salbutamol c/10' x5 veces - Reevaluar a 1 hora.</td>
+                    <td>Oxigenoterapia + 2 puff de salbutamol c/10' x5 veces. Reevaluar en 1 hora. Si el puntaje no mejora, hospitalización.</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="table-container">
-        <h2>Diagrama de Hospitalización Abreviada (Score TAL)</h2>
-        <div class="mermaid">
-            flowchart TD
-                A[Inicio] --> B{Puntaje Score TAL}
-                B -->|0-5| C[Envío a domicilio]
-                B -->|6-8| D[2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 1 hora]
-                B -->|9-12| E[Oxigenoterapia + 2 puff de salbutamol c/10' x5 veces - Reevaluar a 1 hora]
-                C --> F[Observación y control ambulatorio]
-                D --> G[Reevaluar a 1 hora]
-                E --> H[Reevaluar a 1 hora]
-
-                G -->|Puntaje 0-5| F
-                G -->|Puntaje 6-8| I[2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 2 horas]
-                G -->|Puntaje 9-12| J[Envío al hospital]
-
-                I -->|Puntaje 0-5| F
-                I -->|Puntaje 6+| J
-
-                H -->|Puntaje 0-5| F
-                H -->|Puntaje 6+| J
-
-                F[Observación en domicilio] --> K[Control al día siguiente]
-                J[Envío al hospital] --> L[Tratamiento y observación hospitalaria]
-        </div>
-    </div>
-
     <script>
         function calcularScore() {
-            // Obtener los valores de la edad, frecuencia respiratoria, sibilancias, cianosis y retracciones
             let edad = document.getElementById('edad').value;
             let frecuenciaRespiratoria = parseInt(document.getElementById('frecuenciaRespiratoria').value);
             let sibilancias = parseInt(document.getElementById('sibilancias').value);
             let cianosis = parseInt(document.getElementById('cianosis').value);
             let retracciones = parseInt(document.getElementById('retracciones').value);
             
-            // Puntos para la frecuencia respiratoria según la edad
             let puntosFrecuenciaRespiratoria = 0;
             if (edad === "menor_6_meses") {
                 if (frecuenciaRespiratoria <= 40) puntosFrecuenciaRespiratoria = 0;
                 else if (frecuenciaRespiratoria >= 41 && frecuenciaRespiratoria <= 44) puntosFrecuenciaRespiratoria = 1;
                 else if (frecuenciaRespiratoria >= 45 && frecuenciaRespiratoria <= 70) puntosFrecuenciaRespiratoria = 2;
                 else if (frecuenciaRespiratoria > 70) puntosFrecuenciaRespiratoria = 3;
-            } else { // mayor de 6 meses
+            } else {
                 if (frecuenciaRespiratoria <= 30) puntosFrecuenciaRespiratoria = 0;
                 else if (frecuenciaRespiratoria >= 31 && frecuenciaRespiratoria <= 45) puntosFrecuenciaRespiratoria = 1;
                 else if (frecuenciaRespiratoria >= 46 && frecuenciaRespiratoria <= 60) puntosFrecuenciaRespiratoria = 2;
                 else if (frecuenciaRespiratoria > 60) puntosFrecuenciaRespiratoria = 3;
             }
 
-            // Calcular el score total
             let scoreTotal = puntosFrecuenciaRespiratoria + sibilancias + cianosis + retracciones;
             
-            // Mostrar el resultado
             document.getElementById('resultado').innerText = `El Score TAL es: ${scoreTotal}`;
 
-            // Mostrar la recomendación basada en el score
             let recomendacion = "";
             if (scoreTotal >= 0 && scoreTotal <= 5) {
                 recomendacion = "Manejo ambulatorio, sin necesidad de hospitalización. Observar y seguimiento en consultas ambulatorias.";
             } else if (scoreTotal >= 6 && scoreTotal <= 8) {
-                recomendacion = "2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 1 hora.";
+                recomendacion = "2 puff de salbutamol c/10' x5 veces. Reevaluar en 1 hora. Si el puntaje no mejora, añadir corticoides orales o parentales.";
             } else if (scoreTotal >= 9 && scoreTotal <= 12) {
-                recomendacion = "Oxigenoterapia + 2 puff de salbutamol c/10' x5 veces - Reevaluar a 1 hora.";
+                recomendacion = "Enviar directamente al hospital.";
             }
 
             document.getElementById('recomendacion').innerText = recomendacion;
 
-            // Simular la reevaluación tras 1 hora (pseudocódigo)
+            // Reevaluación a 1 hora
             setTimeout(() => {
-                if (scoreTotal >= 6) {
-                    recomendacion = "Puntaje no ha mejorado. Administrar corticoide oral o parental y reevaluar a 2 horas.";
+                if (scoreTotal >= 6 && scoreTotal <= 8) {
+                    recomendacion = "Reevaluación a 1 hora: Puntaje sigue entre 6-8, administrar corticoides orales o parentales.";
+                } else if (scoreTotal >= 9 && scoreTotal <= 12) {
+                    recomendacion = "Reevaluación a 1 hora: Puntaje sigue entre 9-12, enviar al hospital.";
                 } else {
-                    recomendacion = "El puntaje ha mejorado. Manejo ambulatorio.";
+                    recomendacion = "Puntaje mejorado, manejar ambulatorio con seguimiento.";
                 }
                 document.getElementById('recomendacion').innerText = recomendacion;
-            }, 3600000); // Simula la reevaluación tras 1 hora (3600000 ms)
+            }, 3600000); // 1 hora
         }
     </script>
 
