@@ -51,6 +51,31 @@
             margin-top: 20px;
             font-weight: bold;
         }
+        .recommendation {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e2f7e1;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .table-container {
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -95,6 +120,37 @@
         <button onclick="calcularScore()">Calcular Score TAL</button>
         
         <div id="resultado" class="result"></div>
+        <div id="recomendacion" class="recommendation"></div>
+    </div>
+
+    <div class="table-container">
+        <h2>Tabla de Hospitalización Abreviada (según MINSAL)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Puntaje Total</th>
+                    <th>Recomendación de Manejo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0 - 3 puntos</td>
+                    <td>Manejo ambulatorio, sin necesidad de hospitalización. Observar y seguimiento en consultas ambulatorias.</td>
+                </tr>
+                <tr>
+                    <td>4 - 6 puntos</td>
+                    <td>Considerar hospitalización en observación, dependiendo de la evolución clínica y la disponibilidad de recursos.</td>
+                </tr>
+                <tr>
+                    <td>7 - 9 puntos</td>
+                    <td>Hospitalización urgente, iniciar tratamiento en una unidad de cuidado intensivo o cuidado respiratorio especializado.</td>
+                </tr>
+                <tr>
+                    <td>10 o más puntos</td>
+                    <td>Hospitalización urgente en UCI pediátrica, manejo intensivo, con tratamiento inmediato y continuo.</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <script>
@@ -125,6 +181,20 @@
             
             // Mostrar el resultado
             document.getElementById('resultado').innerText = `El Score TAL es: ${scoreTotal}`;
+
+            // Mostrar la recomendación basada en el score
+            let recomendacion = "";
+            if (scoreTotal >= 0 && scoreTotal <= 3) {
+                recomendacion = "Manejo ambulatorio, sin necesidad de hospitalización. Observar y seguimiento en consultas ambulatorias.";
+            } else if (scoreTotal >= 4 && scoreTotal <= 6) {
+                recomendacion = "Considerar hospitalización en observación, dependiendo de la evolución clínica y la disponibilidad de recursos.";
+            } else if (scoreTotal >= 7 && scoreTotal <= 9) {
+                recomendacion = "Hospitalización urgente, iniciar tratamiento en una unidad de cuidado intensivo o cuidado respiratorio especializado.";
+            } else if (scoreTotal >= 10) {
+                recomendacion = "Hospitalización urgente en UCI pediátrica, manejo intensivo, con tratamiento inmediato y continuo.";
+            }
+
+            document.getElementById('recomendacion').innerText = recomendacion;
         }
     </script>
 
