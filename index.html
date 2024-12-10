@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Score TAL en Pediatría</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Calculadora de Score TAL en Pediatría</h1>
+        <p>Introduce los valores para calcular el Score TAL.</p>
+        
+        <label for="edad">Edad del paciente:</label>
+        <select id="edad">
+            <option value="menor_6_meses">Menor de 6 meses</option>
+            <option value="mayor_6_meses">Mayor de 6 meses</option>
+        </select>
+
+        <label for="frecuenciaRespiratoria">Frecuencia Respiratoria (respiraciones por minuto):</label>
+        <input type="number" id="frecuenciaRespiratoria" placeholder="Ejemplo: 70" required>
+        
+        <label for="sibilancias">Sibilancias:</label>
+        <select id="sibilancias">
+            <option value="0">No hay sibilancias</option>
+            <option value="1">Fin de espiración c/ fonendoscopio</option>
+            <option value="2">Inspiración y espiración c/ fonendoscopio</option>
+            <option value="3">Audibles a distancia</option>
+        </select>
+
+        <label for="cianosis">Cianosis:</label>
+        <select id="cianosis">
+            <option value="0">No hay cianosis</option>
+            <option value="1">Peri-oral al llorar</option>
+            <option value="2">Peri-oral en reposo</option>
+            <option value="3">Generalizada en reposo</option>
+        </select>
+
+        <label for="retracciones">Retracciones:</label>
+        <select id="retracciones">
+            <option value="0">No hay retracciones</option>
+            <option value="1">Subcostal</option>
+            <option value="2">Intercostal</option>
+            <option value="3">Supraclavicular</option>
+        </select>
+        
+        <button onclick="calcularScore()">Calcular Score TAL</button>
+        
+        <div id="resultado" class="result"></div>
+    </div>
+
+    <script>
+        function calcularScore() {
+            // Obtener los valores de la edad, frecuencia respiratoria, sibilancias, cianosis y retracciones
+            let edad = document.getElementById('edad').value;
+            let frecuenciaRespiratoria = parseInt(document.getElementById('frecuenciaRespiratoria').value);
+            let sibilancias = parseInt(document.getElementById('sibilancias').value);
+            let cianosis = parseInt(document.getElementById('cianosis').value);
+            let retracciones = parseInt(document.getElementById('retracciones').value);
+            
+            // Puntos para la frecuencia respiratoria según la edad
+            let puntosFrecuenciaRespiratoria = 0;
+            if (edad === "menor_6_meses") {
+                if (frecuenciaRespiratoria <= 40) puntosFrecuenciaRespiratoria = 0;
+                else if (frecuenciaRespiratoria >= 41 && frecuenciaRespiratoria <= 44) puntosFrecuenciaRespiratoria = 1;
+                else if (frecuenciaRespiratoria >= 45 && frecuenciaRespiratoria <= 70) puntosFrecuenciaRespiratoria = 2;
+                else if (frecuenciaRespiratoria > 70) puntosFrecuenciaRespiratoria = 3;
+            } else { // mayor de 6 meses
+                if (frecuenciaRespiratoria <= 30) puntosFrecuenciaRespiratoria = 0;
+                else if (frecuenciaRespiratoria >= 31 && frecuenciaRespiratoria <= 45) puntosFrecuenciaRespiratoria = 1;
+                else if (frecuenciaRespiratoria >= 46 && frecuenciaRespiratoria <= 60) puntosFrecuenciaRespiratoria = 2;
+                else if (frecuenciaRespiratoria > 60) puntosFrecuenciaRespiratoria = 3;
+            }
+
+            // Calcular el score total
+            let scoreTotal = puntosFrecuenciaRespiratoria + sibilancias + cianosis + retracciones;
+            
+            // Mostrar el resultado
+            document.getElementById('resultado').innerText = `El Score TAL es: ${scoreTotal}`;
+        }
+    </script>
+
+</body>
+</html>
