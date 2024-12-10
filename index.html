@@ -221,6 +221,16 @@
             }
 
             document.getElementById('recomendacion').innerText = recomendacion;
+
+            // Simular la reevaluación tras 1 hora (pseudocódigo)
+            setTimeout(() => {
+                if (scoreTotal >= 6) {
+                    recomendacion = "Puntaje no ha mejorado. Administrar corticoide oral o parental y reevaluar a 2 horas.";
+                } else {
+                    recomendacion = "El puntaje ha mejorado. Manejo ambulatorio.";
+                }
+                document.getElementById('recomendacion').innerText = recomendacion;
+            }, 3600000); // Simula la reevaluación tras 1 hora (3600000 ms)
         }
     </script>
 
