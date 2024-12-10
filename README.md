@@ -1,2 +1,2 @@
 # Calculadora-Escala-de-TAL-Pediatria
-Calculadora automatica de Escala de TAL
+He desarrollado una calculadora automática para obtener el Score TAL en pediatría, con el objetivo de facilitar la evaluación cardiorrespiratoria en niños, agilizando el proceso de cálculo y minimizando el riesgo de error humano. Esta herramienta permite calcular el puntaje de manera rápida y precisa, basándose en parámetros clínicos clave como la frecuencia respiratoria, sibilancias, cianosis y retracciones. Además, el algoritmo incorpora el protocolo de hospitalización abreviada recomendado por el Ministerio de Salud (MINSAL) para asegurar un manejo adecuado del paciente según el puntaje obtenido.
