@@ -77,6 +77,11 @@
             color: white;
         }
     </style>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+
+        mermaid.initialize({ startOnLoad: true });
+    </script>
 </head>
 <body>
 
@@ -134,23 +139,46 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>0 - 3 puntos</td>
+                    <td>0 - 5 puntos</td>
                     <td>Manejo ambulatorio, sin necesidad de hospitalización. Observar y seguimiento en consultas ambulatorias.</td>
                 </tr>
                 <tr>
-                    <td>4 - 6 puntos</td>
-                    <td>Considerar hospitalización en observación, dependiendo de la evolución clínica y la disponibilidad de recursos.</td>
+                    <td>6 - 8 puntos</td>
+                    <td>2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 1 hora.</td>
                 </tr>
                 <tr>
-                    <td>7 - 9 puntos</td>
-                    <td>Hospitalización urgente, iniciar tratamiento en una unidad de cuidado intensivo o cuidado respiratorio especializado.</td>
-                </tr>
-                <tr>
-                    <td>10 o más puntos</td>
-                    <td>Hospitalización urgente en UCI pediátrica, manejo intensivo, con tratamiento inmediato y continuo.</td>
+                    <td>9 - 12 puntos</td>
+                    <td>Oxigenoterapia + 2 puff de salbutamol c/10' x5 veces - Reevaluar a 1 hora.</td>
                 </tr>
             </tbody>
         </table>
+    </div>
+
+    <div class="table-container">
+        <h2>Diagrama de Hospitalización Abreviada (Score TAL)</h2>
+        <div class="mermaid">
+            flowchart TD
+                A[Inicio] --> B{Puntaje Score TAL}
+                B -->|0-5| C[Envío a domicilio]
+                B -->|6-8| D[2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 1 hora]
+                B -->|9-12| E[Oxigenoterapia + 2 puff de salbutamol c/10' x5 veces - Reevaluar a 1 hora]
+                C --> F[Observación y control ambulatorio]
+                D --> G[Reevaluar a 1 hora]
+                E --> H[Reevaluar a 1 hora]
+
+                G -->|Puntaje 0-5| F
+                G -->|Puntaje 6-8| I[2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 2 horas]
+                G -->|Puntaje 9-12| J[Envío al hospital]
+
+                I -->|Puntaje 0-5| F
+                I -->|Puntaje 6+| J
+
+                H -->|Puntaje 0-5| F
+                H -->|Puntaje 6+| J
+
+                F[Observación en domicilio] --> K[Control al día siguiente]
+                J[Envío al hospital] --> L[Tratamiento y observación hospitalaria]
+        </div>
     </div>
 
     <script>
@@ -184,14 +212,12 @@
 
             // Mostrar la recomendación basada en el score
             let recomendacion = "";
-            if (scoreTotal >= 0 && scoreTotal <= 3) {
+            if (scoreTotal >= 0 && scoreTotal <= 5) {
                 recomendacion = "Manejo ambulatorio, sin necesidad de hospitalización. Observar y seguimiento en consultas ambulatorias.";
-            } else if (scoreTotal >= 4 && scoreTotal <= 6) {
-                recomendacion = "Considerar hospitalización en observación, dependiendo de la evolución clínica y la disponibilidad de recursos.";
-            } else if (scoreTotal >= 7 && scoreTotal <= 9) {
-                recomendacion = "Hospitalización urgente, iniciar tratamiento en una unidad de cuidado intensivo o cuidado respiratorio especializado.";
-            } else if (scoreTotal >= 10) {
-                recomendacion = "Hospitalización urgente en UCI pediátrica, manejo intensivo, con tratamiento inmediato y continuo.";
+            } else if (scoreTotal >= 6 && scoreTotal <= 8) {
+                recomendacion = "2 puff de salbutamol c/10' x5 veces + Corticoide oral o parental - Reevaluar a 1 hora.";
+            } else if (scoreTotal >= 9 && scoreTotal <= 12) {
+                recomendacion = "Oxigenoterapia + 2 puff de salbutamol c/10' x5 veces - Reevaluar a 1 hora.";
             }
 
             document.getElementById('recomendacion').innerText = recomendacion;
