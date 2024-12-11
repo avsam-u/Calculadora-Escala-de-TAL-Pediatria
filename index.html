@@ -3,55 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora del Score TAL en Pediatría</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Vinculación al archivo CSS -->
+    <title>Calculadora Score TAL Pediatría</title>
+    <link rel="stylesheet" href="style.css"> <!-- Enlace al archivo CSS -->
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora del Score TAL en Pediatría</h1>
-        <p>Ingresa los datos del paciente para calcular el Score TAL en Pediatría.</p>
+        <h1>Calculadora Score TAL Pediatría</h1>
 
-        <!-- Selección de tipo de paciente -->
-        <label for="tipoPaciente">Selecciona el tipo de paciente:</label>
-        <select id="tipoPaciente">
-            <option value="menor6meses">Menor de 6 meses</option>
-            <option value="mayor6meses">Mayor de 6 meses</option>
-        </select>
+        <div class="formulario">
+            <label for="tipoPaciente">Tipo de paciente:</label>
+            <select id="tipoPaciente">
+                <option value="menor6meses">Menor de 6 meses</option>
+                <option value="mayor6meses">Mayor de 6 meses</option>
+            </select>
 
-        <!-- Ingresar datos -->
-        <label for="frecuenciaRespiratoria">Frecuencia Respiratoria:</label>
-        <input type="number" id="frecuenciaRespiratoria" placeholder="Frecuencia respiratoria" required>
+            <label for="frecuenciaRespiratoria">Frecuencia respiratoria:</label>
+            <input type="number" id="frecuenciaRespiratoria" placeholder="Frecuencia respiratoria">
 
-        <label for="sibilancias">Sibilancias:</label>
-        <select id="sibilancias">
-            <option value="0">No</option>
-            <option value="1">Fin de espiración con fonendoscopio</option>
-            <option value="2">Inspiración y espiración con fonendoscopio</option>
-            <option value="3">Audibles a distancia</option>
-        </select>
+            <label for="sibilancias">Sibilancias (0-3):</label>
+            <input type="number" id="sibilancias" placeholder="Sibilancias" min="0" max="3">
 
-        <label for="cianosis">Cianosis:</label>
-        <select id="cianosis">
-            <option value="0">No</option>
-            <option value="1">Peri-oral al llorar</option>
-            <option value="2">Peri-oral en reposo</option>
-            <option value="3">Generalizada en reposo</option>
-        </select>
+            <label for="cianosis">Cianosis (0-3):</label>
+            <input type="number" id="cianosis" placeholder="Cianosis" min="0" max="3">
 
-        <label for="retracciones">Retracciones:</label>
-        <select id="retracciones">
-            <option value="0">No</option>
-            <option value="1">Subcostal</option>
-            <option value="2">Intercostal</option>
-            <option value="3">Supraclavicular</option>
-        </select>
+            <label for="retracciones">Retracciones (0-3):</label>
+            <input type="number" id="retracciones" placeholder="Retracciones" min="0" max="3">
 
-        <button onclick="calcularScore()">Calcular Score</button>
+            <button id="calcularBtn">Calcular Score</button>
+        </div>
 
-        <div id="resultado" class="result"></div>
+        <div id="resultado" class="result"></div> <!-- Aquí se mostrará el resultado -->
     </div>
 
-    <script src="script.js"></script> <!-- Vinculación al archivo JavaScript -->
+    <script src="script.js"></script> <!-- Enlace al archivo JavaScript -->
 </body>
 </html>
-
