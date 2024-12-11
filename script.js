@@ -1,17 +1,21 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // Asegurarse de que el evento se dispare después de cargar el DOM
+
     // Función para calcular el Score TAL
     document.getElementById("calcularBtn").addEventListener("click", function() {
+        // Obtener los valores de los inputs
         const tipoPaciente = document.getElementById('tipoPaciente').value;
         const frecuenciaRespiratoria = parseInt(document.getElementById('frecuenciaRespiratoria').value);
         const sibilancias = parseInt(document.getElementById('sibilancias').value);
         const cianosis = parseInt(document.getElementById('cianosis').value);
         const retracciones = parseInt(document.getElementById('retracciones').value);
+
         let puntuacion = 0;
 
         // Validación de la frecuencia respiratoria
         if (isNaN(frecuenciaRespiratoria) || frecuenciaRespiratoria <= 0) {
             alert("Por favor, ingresa una frecuencia respiratoria válida.");
-            return;
+            return; // Evitar que se siga calculando si hay error
         }
 
         // Calcular el puntaje según el tipo de paciente
@@ -27,20 +31,20 @@ document.addEventListener("DOMContentLoaded", function() {
             else puntuacion += 3;
         }
 
-        // Sibilancias
+        // Añadir puntaje de sibilancias
         puntuacion += sibilancias;
 
-        // Cianosis
+        // Añadir puntaje de cianosis
         puntuacion += cianosis;
 
-        // Retracciones
+        // Añadir puntaje de retracciones
         puntuacion += retracciones;
 
-        // Mostrar el resultado del puntaje
+        // Mostrar el resultado
         let resultado = `El puntaje total es: ${puntuacion}`;
         let recomendacion = '';
 
-        // Recomendación según el puntaje
+        // Recomendaciones según el puntaje
         if (puntuacion <= 5) {
             recomendacion = "Enviar al domicilio con seguimiento.";
         } else if (puntuacion <= 8) {
@@ -51,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
             recomendacion = "Enviar directamente al hospital.";
         }
 
-        // Mostrar el resultado y la recomendación
+        // Mostrar el resultado y recomendación
         document.getElementById('resultado').innerHTML = `${resultado} <br> Recomendación: ${recomendacion}`;
     });
 });
