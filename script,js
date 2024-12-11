@@ -19,7 +19,7 @@ function calcularScore() {
         else if (frecuenciaRespiratoria <= 44) puntuacion += 1;
         else if (frecuenciaRespiratoria <= 70) puntuacion += 2;
         else puntuacion += 3;
-    } else {
+    } else if (tipoPaciente === 'mayor6meses') {
         if (frecuenciaRespiratoria <= 30) puntuacion += 0;
         else if (frecuenciaRespiratoria <= 45) puntuacion += 1;
         else if (frecuenciaRespiratoria <= 60) puntuacion += 2;
